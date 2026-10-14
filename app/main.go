@@ -76,5 +76,23 @@ func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	fmt.Fprintln(os.Stderr, "Logs from your program will appear here!")
 
-	fmt.Print(resp.Choices[0].Message.Content)
+	if len(resp.Choices[0].Message.ToolCalls) == 0 {
+		fmt.Print(resp.Choices[0].Message.Content)
+	} else {
+		tool_call := resp.Choices[0].Message.ToolCalls[0]
+		function_name := tool_call.Function.Name
+
+		switch function_name {
+		case "Read":
+			fmt.Println("Running the read tool call")
+			readToolArgs, err := ParseReadToolArgs(tool_call.Function.Arguments)
+			if err != nil {
+				panic("Error while processing the read arguments for tool call")
+			}
+			ReadTool(readToolArgs)
+
+		default:
+			panic("unknown tool")
+		}
+	}
 }
