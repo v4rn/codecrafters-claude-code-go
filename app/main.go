@@ -84,7 +84,6 @@ func main() {
 
 		switch function_name {
 		case "Read":
-			fmt.Println("Running the read tool call")
 			readToolArgs, err := ParseReadToolArgs(tool_call.Function.Arguments)
 			if err != nil {
 				panic("Error while processing the read arguments for tool call")

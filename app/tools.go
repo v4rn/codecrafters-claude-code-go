@@ -23,6 +23,6 @@ func ReadTool(args *ReadToolArgs) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(b)
+	fmt.Printf("%s", b)
 	return nil
 }
